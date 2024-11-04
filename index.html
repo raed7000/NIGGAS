@@ -1,177 +1,214 @@
-<html><head><base href="." />
-<meta charset="UTF-8">
-<title>For My Beloved Maliha 💖</title>
+<html><head><base href="."</head></head>
 <style>
   body {
     margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(45deg, #ffe6e6, #ffb3d9);
-    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Comic Sans MS', cursive;
+    background-color: #ffd1dc;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .slideshow-container {
-    width: 80%;
-    max-width: 800px;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  #gameContainer {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    background: white;
+    border: 3px solid #ff69b4;
+    border-radius: 10px;
+    margin: 20px;
   }
 
-  .slide {
+  #player {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff69b4;
+    border-radius: 50%;
+    transition: all 0.1s;
+    z-index: 2;
+  }
+
+  .wall {
+    position: absolute;
+    background: #ff96c8;
+  }
+
+  #cake {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  #message {
     display: none;
-    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
-    animation: fadeIn 1.5s;
-  }
-
-  .slide.active {
-    display: block;
-  }
-
-  .message {
-    font-size: 24px;
-    color: #ff4d94;
-    margin: 20px 0;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-  }
-
-  .cat-animation {
-    width: 200px;
-    height: 200px;
-    margin: 20px auto;
-  }
-
-  .navigation {
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
     text-align: center;
-    margin: 20px 0;
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    z-index: 100;
   }
 
-  button {
-    background: #ff66a3;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 25px;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  button:hover {
-    transform: scale(1.1);
-  }
-
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-
-  h1 {
-    color: #ff1a75;
+  .title {
+    color: #ff69b4;
     text-align: center;
-    font-size: 36px;
-    margin: 20px 0;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
   }
 
-  .heart {
-    animation: heartbeat 1.5s infinite;
+  #catGifContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+</style>
+
+<h1 class="title">🎂 Maliha's Birthday Maze Adventure 🎂</h1>
+<p>Help guide Maliha to her birthday cake! Use arrow keys or WASD to move.</p>
+<div id="gameContainer">
+  <div id="player"></div>
+  <svg id="cake" width="40" height="40" viewBox="0 0 40 40">
+    <rect x="5" y="20" width="30" height="15" fill="#ff69b4"/>
+    <rect x="10" y="10" width="20" height="10" fill="#ff96c8"/>
+    <circle cx="20" y="5" r="3" fill="#ff0000"/>
+  </svg>
+</div>
+
+<div id="message">
+  <h2>🎉 Happy Birthday My Dearest Maliha! 🎉</h2>
+  <p>My amazing girlfriend, you've made it to the cake! 🎂</p>
+  <p>Every day with you feels like a blessing. Your smile lights up my world, and your love makes every moment special. You're not just my girlfriend, you're my best friend, my partner in crime, and the most wonderful person I know.</p>
+  <p>Your kindness, intelligence, and beautiful soul make me fall in love with you more each day. I hope this little game brought a smile to your face - just like you bring to mine every single day! 😊</p>
+  <p>Here are some cute cats to celebrate with us! 🐱</p>
+  <div id="catGifContainer">
+    <img alt="cute cat waving hello, animated gif" src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" width="200" height="200">
+    <img alt="cat blowing kiss, animated gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="200" height="200">
+    <img alt="cat with birthday hat, animated gif" src="https://media.giphy.com/media/SwIMZUJE3ZPpHAfTC4/giphy.gif" width="200" height="200">
+  </div>
+  <button onclick="closeMessage()" style="margin-top: 20px; padding: 10px; background: #ff69b4; border: none; border-radius: 5px; color: white; cursor: pointer;">Close ❤️</button>
+</div>
+
+<script>
+const player = document.getElementById('player');
+const gameContainer = document.getElementById('gameContainer');
+const cake = document.getElementById('cake');
+const message = document.getElementById('message');
+
+// Player position
+let playerX = 30;
+let playerY = 30;
+player.style.left = playerX + 'px';
+player.style.top = playerY + 'px';
+
+// Create maze walls
+const walls = [
+  {x: 60, y: 0, width: 10, height: 500},
+  {x: 60, y: 60, width: 480, height: 10},
+  {x: 120, y: 120, width: 10, height: 420},
+  {x: 180, y: 60, width: 10, height: 480},
+  {x: 240, y: 0, width: 10, height: 540},
+  {x: 300, y: 60, width: 10, height: 480},
+  {x: 360, y: 0, width: 10, height: 540},
+  {x: 420, y: 60, width: 10, height: 480},
+  {x: 480, y: 0, width: 10, height: 540},
+];
+
+walls.forEach(wall => {
+  const wallElement = document.createElement('div');
+  wallElement.className = 'wall';
+  wallElement.style.left = wall.x + 'px';
+  wallElement.style.top = wall.y + 'px';
+  wallElement.style.width = wall.width + 'px';
+  wallElement.style.height = wall.height + 'px';
+  gameContainer.appendChild(wallElement);
+});
+
+function checkCollision(newX, newY) {
+  const playerRect = {
+    x: newX,
+    y: newY,
+    width: 20,
+    height: 20
+  };
+
+  // Check wall collisions
+  for (const wall of walls) {
+    if (playerRect.x < wall.x + wall.width &&
+        playerRect.x + playerRect.width > wall.x &&
+        playerRect.y < wall.y + wall.height &&
+        playerRect.y + playerRect.height > wall.y) {
+      return true;
+    }
   }
 
-  @keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-</style>
-</head>
-<body>
-  <h1>Dear Maliha <span class="heart">❤️</span></h1>
-  
-  <div class="slideshow-container">
-    <div class="slides">
-      <div class="slide active">
-        <div class="message">Maliha, from the moment I met you, my world became brighter and more beautiful.</div>
-        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute animated cats cuddling and showing love" width="200" height="200" class="cat-animation">
-      </div>
+  // Check boundary collisions
+  if (newX < 0 || newX > gameContainer.offsetWidth - 20 ||
+      newY < 0 || newY > gameContainer.offsetHeight - 20) {
+    return true;
+  }
 
-      <div class="slide">
-        <div class="message">Your smile lights up my entire day and makes my heart skip a beat every single time.</div>
-        <img src="https://media.giphy.com/media/VIPdgcooFJHtC/giphy.gif" alt="Adorable cat blowing kisses" width="200" height="200" class="cat-animation">
-      </div>
+  return false;
+}
 
-      <div class="slide">
-        <div class="message">Every moment spent with you feels like a beautiful dream I never want to wake up from.</div>
-        <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sweet cats showing affection" width="200" height="200" class="cat-animation">
-      </div>
+function checkWin() {
+  const playerRect = player.getBoundingClientRect();
+  const cakeRect = cake.getBoundingClientRect();
 
-      <div class="slide">
-        <div class="message">You're not just my girlfriend, you're my best friend and my soulmate.</div>
-        <img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" alt="Cute grey cat making heart eyes" width="200" height="200" class="cat-animation">
-      </div>
+  if (playerRect.left < cakeRect.right &&
+      playerRect.right > cakeRect.left &&
+      playerRect.top < cakeRect.bottom &&
+      playerRect.bottom > cakeRect.top) {
+    message.style.display = 'block';
+  }
+}
 
-      <div class="slide">
-        <div class="message">Your kindness, intelligence, and beautiful heart make me fall in love with you more each day.</div>
-        <img src="https://media.giphy.com/media/ZtB2l3jHiJsFa/giphy.gif" alt="Cute cat giving love" width="200" height="200" class="cat-animation">
-      </div>
+function movePlayer(dx, dy) {
+  const newX = playerX + dx;
+  const newY = playerY + dy;
 
-      <div class="slide">
-        <div class="message">Being with you makes everything in life more meaningful and special.</div>
-        <img src="https://media.giphy.com/media/12PA1eI8FBqEBa/giphy.gif" alt="Cute cat giving kisses" width="200" height="200" class="cat-animation">
-      </div>
+  if (!checkCollision(newX, newY)) {
+    playerX = newX;
+    playerY = newY;
+    player.style.left = playerX + 'px';
+    player.style.top = playerY + 'px';
+    checkWin();
+  }
+}
 
-      <div class="slide">
-        <div class="message">You're the first person I want to talk to in the morning and the last person I want to talk to at night.</div>
-        <img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" alt="Cute cat snuggling with heart animation" width="200" height="200" class="cat-animation">
-      </div>
+function closeMessage() {
+  message.style.display = 'none';
+}
 
-      <div class="slide">
-        <div class="message">Thank you for being the most amazing girlfriend anyone could ask for.</div>
-        <img src="https://media.giphy.com/media/B6odR0DhsStfW/giphy.gif" alt="Adorable cat cuddling and purring" width="200" height="200" class="cat-animation">
-      </div>
-
-      <div class="slide">
-        <div class="message">I promise to always be there for you, to love you, and to make you smile.</div>
-        <img src="https://media.giphy.com/media/RhrAmVUHxjTQvEPBWi/giphy.gif" alt="Sweet animated cat with hearts floating" width="200" height="200" class="cat-animation">
-      </div>
-
-      <div class="slide">
-        <div class="message">I love you more than words can express, Maliha. You're my everything! ❤️</div>
-        <img src="https://media.giphy.com/media/3oriO6qJiXajN0TyDu/giphy.gif" alt="Affectionate cats showing love" width="200" height="200" class="cat-animation">
-      </div>
-    </div>
-
-    <div class="navigation">
-      <button onclick="prevSlide()">Previous</button>
-      <button onclick="nextSlide()">Next</button>
-    </div>
-  </div>
-
-  <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-
-    function showSlide(n) {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (n + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-
-    function nextSlide() {
-      showSlide(currentSlide + 1);
-    }
-
-    function prevSlide() {
-      showSlide(currentSlide - 1);
-    }
-
-    // Auto advance slides every 5 seconds
-    setInterval(nextSlide, 5000);
-  </script>
-</body>
+window.addEventListener('keydown', (e) => {
+  const speed = 5;
+  switch(e.key) {
+    case 'ArrowUp':
+    case 'w':
+      movePlayer(0, -speed);
+      break;
+    case 'ArrowDown':
+    case 's':
+      movePlayer(0, speed);
+      break;
+    case 'ArrowLeft':
+    case 'a':
+      movePlayer(-speed, 0);
+      break;
+    case 'ArrowRight':
+    case 'd':
+      movePlayer(speed, 0);
+      break;
+  }
+});
+</script>
 </html>
