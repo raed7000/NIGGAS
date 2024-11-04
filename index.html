@@ -1,0 +1,177 @@
+<html><head><base href="." />
+<meta charset="UTF-8">
+<title>For My Beloved Maliha 💖</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(45deg, #ffe6e6, #ffb3d9);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slideshow-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+
+  .slide {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 1.5s;
+  }
+
+  .slide.active {
+    display: block;
+  }
+
+  .message {
+    font-size: 24px;
+    color: #ff4d94;
+    margin: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .cat-animation {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+  }
+
+  .navigation {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  button {
+    background: #ff66a3;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  h1 {
+    color: #ff1a75;
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .heart {
+    animation: heartbeat 1.5s infinite;
+  }
+
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+</style>
+</head>
+<body>
+  <h1>Dear Maliha <span class="heart">❤️</span></h1>
+  
+  <div class="slideshow-container">
+    <div class="slides">
+      <div class="slide active">
+        <div class="message">Maliha, from the moment I met you, my world became brighter and more beautiful.</div>
+        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute animated cats cuddling and showing love" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">Your smile lights up my entire day and makes my heart skip a beat every single time.</div>
+        <img src="https://media.giphy.com/media/VIPdgcooFJHtC/giphy.gif" alt="Adorable cat blowing kisses" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">Every moment spent with you feels like a beautiful dream I never want to wake up from.</div>
+        <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sweet cats showing affection" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">You're not just my girlfriend, you're my best friend and my soulmate.</div>
+        <img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" alt="Cute grey cat making heart eyes" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">Your kindness, intelligence, and beautiful heart make me fall in love with you more each day.</div>
+        <img src="https://media.giphy.com/media/ZtB2l3jHiJsFa/giphy.gif" alt="Cute cat giving love" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">Being with you makes everything in life more meaningful and special.</div>
+        <img src="https://media.giphy.com/media/12PA1eI8FBqEBa/giphy.gif" alt="Cute cat giving kisses" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">You're the first person I want to talk to in the morning and the last person I want to talk to at night.</div>
+        <img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" alt="Cute cat snuggling with heart animation" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">Thank you for being the most amazing girlfriend anyone could ask for.</div>
+        <img src="https://media.giphy.com/media/B6odR0DhsStfW/giphy.gif" alt="Adorable cat cuddling and purring" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">I promise to always be there for you, to love you, and to make you smile.</div>
+        <img src="https://media.giphy.com/media/RhrAmVUHxjTQvEPBWi/giphy.gif" alt="Sweet animated cat with hearts floating" width="200" height="200" class="cat-animation">
+      </div>
+
+      <div class="slide">
+        <div class="message">I love you more than words can express, Maliha. You're my everything! ❤️</div>
+        <img src="https://media.giphy.com/media/3oriO6qJiXajN0TyDu/giphy.gif" alt="Affectionate cats showing love" width="200" height="200" class="cat-animation">
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button onclick="prevSlide()">Previous</button>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    // Auto advance slides every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
+</body>
+</html>
